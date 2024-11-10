@@ -56,8 +56,8 @@ touch Repositories/.gitkeep
 cd ../../..
 
 # Agregar el proyecto Blazor
-mkdir -p WebUI/CommunityBlazor
-cd WebUI/CommunityBlazor
+mkdir -p Frontend/CommunityBlazor
+cd Frontend/CommunityBlazor
 mkdir -p {Pages,Shared,Components,Services,wwwroot,Models}
 
 # Crear PostDto.cs
@@ -260,6 +260,8 @@ cat > wwwroot/index.html << EOF
 EOF
 
 cd ../../..
+
+touch .gitignore README.md solution.sln
 
 # Agregar .gitkeep a todos los directorios vacíos
 create_gitkeep
