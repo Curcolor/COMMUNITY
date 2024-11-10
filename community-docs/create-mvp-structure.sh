@@ -267,7 +267,8 @@ touch .gitignore README.md solution.sln
 create_gitkeep
 
 echo "Estructura MVP del proyecto creada exitosamente en: $(pwd)/$PROJECT_NAME"
+
 echo "Se ha agregado la interfaz de usuario con Blazor y MudBlazor"
 echo "Para ejecutar el proyecto:"
-echo "1. cd src/WebUI/CommunityBlazor"
+echo "1. cd src/Frontend/CommunityBlazor"
 echo "2. dotnet run"
