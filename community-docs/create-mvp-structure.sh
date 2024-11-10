@@ -1,4 +1,3 @@
-# Community MVP
 #!/bin/bash
 
 # Definir el directorio base del proyecto
@@ -17,14 +16,68 @@ mkdir -p {src,tests,deploy,docs}
 # Crear estructura de src
 cd src
 
+# Crear estructura de microservicios
+mkdir -p Microservices/{Users,Posts}
+
+# Estructura para el microservicio de Users
+cd Microservices/Users
+mkdir -p {Api,Core,Infrastructure}
+cd Api
+mkdir -p {Controllers,DTOs}
+touch Controllers/.gitkeep
+touch DTOs/.gitkeep
+cd ../Core
+mkdir -p {Entities,Interfaces,Services}
+touch Entities/.gitkeep
+touch Interfaces/.gitkeep
+touch Services/.gitkeep
+cd ../Infrastructure
+mkdir -p {Data,Repositories}
+touch Data/.gitkeep
+touch Repositories/.gitkeep
+cd ../../..
+
+# Estructura para el microservicio de Posts
+cd Microservices/Posts
+mkdir -p {Api,Core,Infrastructure}
+cd Api
+mkdir -p {Controllers,DTOs}
+touch Controllers/.gitkeep
+touch DTOs/.gitkeep
+cd ../Core
+mkdir -p {Entities,Interfaces,Services}
+touch Entities/.gitkeep
+touch Interfaces/.gitkeep
+touch Services/.gitkeep
+cd ../Infrastructure
+mkdir -p {Data,Repositories}
+touch Data/.gitkeep
+touch Repositories/.gitkeep
+cd ../../..
+
 # Agregar el proyecto Blazor
 mkdir -p WebUI/CommunityBlazor
 cd WebUI/CommunityBlazor
-mkdir -p {Pages,Shared,Components,Services,wwwroot}
+mkdir -p {Pages,Shared,Components,Services,wwwroot,Models}
+
+# Crear PostDto.cs
+cat > Models/PostDto.cs << EOF
+namespace CommunityBlazor.Models;
+
+public class PostDto
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public string AuthorName { get; set; }
+}
+EOF
 
 # Crear archivos básicos de Blazor
 cat > Pages/Index.razor << EOF
 @page "/"
+@using CommunityBlazor.Models
 
 <PageTitle>Community MVP</PageTitle>
 
@@ -51,6 +104,8 @@ cat > Pages/Index.razor << EOF
                             <MudCardContent>
                                 <MudText Typo="Typo.h6">@post.Title</MudText>
                                 <MudText>@post.Description</MudText>
+                                <MudText Typo="Typo.body2">Por: @post.AuthorName</MudText>
+                                <MudText Typo="Typo.body2">@post.CreatedAt.ToString("dd/MM/yyyy")</MudText>
                             </MudCardContent>
                         </MudCard>
                     }
@@ -65,8 +120,26 @@ cat > Pages/Index.razor << EOF
 
     protected override async Task OnInitializedAsync()
     {
-        // TODO: Implementar llamada al servicio
-        posts = new List<PostDto>();
+        // Datos de ejemplo
+        posts = new List<PostDto>
+        {
+            new PostDto 
+            { 
+                Id = 1, 
+                Title = "Voluntariado en Hospital", 
+                Description = "Se buscan voluntarios para apoyo en hospital local",
+                CreatedAt = DateTime.Now,
+                AuthorName = "Juan Pérez"
+            },
+            new PostDto 
+            { 
+                Id = 2, 
+                Title = "Ayuda en Comedor Social", 
+                Description = "Necesitamos voluntarios para el comedor social del barrio",
+                CreatedAt = DateTime.Now.AddDays(-1),
+                AuthorName = "María García"
+            }
+        };
     }
 }
 EOF
@@ -119,6 +192,7 @@ cat > _Imports.razor << EOF
 @using MudBlazor
 @using CommunityBlazor
 @using CommunityBlazor.Shared
+@using CommunityBlazor.Models
 EOF
 
 # Crear App.razor
@@ -185,10 +259,7 @@ cat > wwwroot/index.html << EOF
 </html>
 EOF
 
-cd ../..
-
-# Continuar con el resto del script anterior...
-# [El resto del script se mantiene igual hasta el final]
+cd ../../..
 
 # Agregar .gitkeep a todos los directorios vacíos
 create_gitkeep
