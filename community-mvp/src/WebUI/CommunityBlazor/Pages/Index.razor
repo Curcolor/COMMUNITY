@@ -1,0 +1,66 @@
+@page "/"
+@using CommunityBlazor.Models
+
+<PageTitle>Community MVP</PageTitle>
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h4">Bienvenido a Community</MudText>
+                <MudText Class="mt-4">Plataforma para conectar voluntarios con oportunidades.</MudText>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h5">Últimas Publicaciones</MudText>
+                @if (posts == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    @foreach (var post in posts)
+                    {
+                        <MudCard Class="mt-4">
+                            <MudCardContent>
+                                <MudText Typo="Typo.h6">@post.Title</MudText>
+                                <MudText>@post.Description</MudText>
+                                <MudText Typo="Typo.body2">Por: @post.AuthorName</MudText>
+                                <MudText Typo="Typo.body2">@post.CreatedAt.ToString("dd/MM/yyyy")</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                }
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private List<PostDto> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Datos de ejemplo
+        posts = new List<PostDto>
+        {
+            new PostDto 
+            { 
+                Id = 1, 
+                Title = "Voluntariado en Hospital", 
+                Description = "Se buscan voluntarios para apoyo en hospital local",
+                CreatedAt = DateTime.Now,
+                AuthorName = "Juan Pérez"
+            },
+            new PostDto 
+            { 
+                Id = 2, 
+                Title = "Ayuda en Comedor Social", 
+                Description = "Necesitamos voluntarios para el comedor social del barrio",
+                CreatedAt = DateTime.Now.AddDays(-1),
+                AuthorName = "María García"
+            }
+        };
+    }
+}
