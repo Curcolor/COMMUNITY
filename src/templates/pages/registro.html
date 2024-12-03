@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Community</title>
+    <link rel="stylesheet" href="/src/static/styles/style.css">
+    <link rel="stylesheet" href="/src/static/styles/css/registro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-hands-helping"></i>
+            <h1><a href="/inicio" style="text-decoration: none; color: inherit;">Community</a></h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="registro-container">
+            <div class="registro-card">
+                <h2><i class="fas fa-user-plus"></i> Crear Cuenta</h2>
+                <form id="registroForm">
+                    <!-- Información Personal -->
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="nombre_completo">Nombre Completo *</label>
+                            <input type="text" id="nombre_completo" placeholder="Ej: Juan Pérez" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dni">DNI *</label>
+                                <input type="text" id="dni" placeholder="Ej: 12345678" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correo Electrónico *</label>
+                                <input type="email" id="email" placeholder="correo@ejemplo.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefono">Teléfono *</label>
+                                <input type="tel" id="telefono" placeholder="Ej: 612345678" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+                                <input type="date" id="fecha_nacimiento" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información de Cuenta -->
+                    <div class="form-section">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contraseña">Contraseña *</label>
+                                <input type="password" id="contraseña" placeholder="Mínimo 8 caracteres" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmar_contraseña">Confirmar Contraseña *</label>
+                                <input type="password" id="confirmar_contraseña" placeholder="Repite tu contraseña" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferencias de Donación -->
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label>Áreas de Interés *</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="intereses" value="educacion"> Educación</label>
+                                <label><input type="checkbox" name="intereses" value="salud"> Salud</label>
+                                <label><input type="checkbox" name="intereses" value="medioambiente"> Medio Ambiente</label>
+                                <label><input type="checkbox" name="intereses" value="deporte"> Deporte</label>
+                                <label><input type="checkbox" name="intereses" value="cultura"> Cultura</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-registro">
+                        <i class="fas fa-user-plus"></i> Crear Cuenta
+                    </button>
+                </form>
+                <div id="resultado"></div>
+                <div class="registro-footer">
+                    <p>¿Ya tienes una cuenta? <a href="/iniciarSesion">Inicia sesión aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Community. Todos los derechos reservados.</p>
+    </footer>
+    <script src="/src/static/scripts/js/registro.js"></script>
+</body>
+</html>

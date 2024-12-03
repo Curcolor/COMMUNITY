@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Mi Perfil</title>
+    <link rel="stylesheet" href="/src/static/styles/style.css">
+    <link rel="stylesheet" href="/src/static/styles/css/perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-hands-helping"></i>
+            <h1><a href="/inicio" style="text-decoration: none; color: inherit;">Community</a></h1>
+        </div>
+        <p>Uniendo donantes con causas importantes</p>
+    </header>
+
+    <nav class="nav">
+        <a href="/proyectos" data-tooltip="Explora todos los proyectos disponibles"><i class="fas fa-project-diagram"></i> Proyectos</a>
+        <a href="/organizaciones" data-tooltip="Conoce las organizaciones que están haciendo la diferencia"><i class="fas fa-building"></i> Organizaciones</a>
+        <a href="/donar" data-tooltip="Contribuye a las causas que te importan"><i class="fas fa-donate"></i> Donar</a>
+        <a href="/recibir" data-tooltip="Conecta con quienes ofrecen ayudas"><i class="fas fa-hand-holding-heart"></i> Recibir</a>
+        <a href="/perfil" data-tooltip="Gestiona tu perfil y tus donaciones" class="active"><i class="fas fa-user"></i> Mi Perfil</a>
+    </nav>
+
+    <main class="container">
+        <div class="profile-header">
+            <img src="/src/static/images/perfilimg.jpg" alt="Foto de perfil" class="profile-picture">
+            {% if usuario %}
+                <h2 id="userName">{{ usuario }}</h2>
+                <div class="user-actions">
+                    <button onclick="cerrarSesion()" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </div>
+            {% else %}
+                <h2>Usuario no identificado</h2>
+                <div class="login-link">
+                    <a href="/iniciarSesion">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </a>
+                    <span class="separator">|</span>
+                    <a href="/registrarse">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if usuario %}
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <i class="fas fa-donate"></i>
+                    <h3>Total Donado</h3>
+                    <p id="totalDonated">${{ total_donado }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>Proyectos Apoyados</h3>
+                    <p id="projectsSupported">0</p>
+                </div>
+            </div>
+
+            <div class="donation-history card fadeInUp">
+                <h3><i class="fas fa-history"></i> Historial de Donaciones</h3>
+                <table id="donationTable">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Proyecto/Organización</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- El historial de nes se cargará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="organizations-section card fadeInUp">
+                <h3><i class="fas fa-building"></i> Mis Organizaciones</h3>
+                <div class="organizations-grid">
+                    {% for org in organizaciones %}
+                        <div class="organization-card">
+                            <img src="{{ org.imagen_url }}" alt="Organización">
+                            <h4>{{ org.nombre }}</h4>
+                            <p class="org-category"><i class="fas fa-tag"></i> {{ org.categoria }}</p>
+                            <div class="org-stats">
+                                <span><i class="fas fa-hand-holding-heart"></i> 12 Donaciones</span>
+                                <span><i class="fas fa-users"></i> 45 Miembros</span>
+                            </div>
+                            
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Community. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/src/static/scripts/js/perfil.js"></script>
+</body>
+</html>
+
