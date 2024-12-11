@@ -35,7 +35,7 @@ async function obtenerProyectos() {
 }
 
 // Función para cargar los proyectos
-async function cargarProyectos() {
+async function cargarProyectos(categoria = 'all') {
     try {
         const projectList = document.getElementById('projectList');
         if (!projectList) return;
@@ -44,7 +44,9 @@ async function cargarProyectos() {
         
         const proyectos = await obtenerProyectos();
         
-        proyectos.forEach(proyecto => {
+        const proyectosFiltrados = categoria === 'all' ? proyectos : proyectos.filter(proyecto => proyecto.categoria === categoria);
+        
+        proyectosFiltrados.forEach(proyecto => {
             const projectCard = crearTarjetaProyecto(proyecto);
             projectList.appendChild(projectCard);
         });
@@ -137,8 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Mantener el resto del código de DOMContentLoaded
+    // Cargar los proyectos cuando la página se cargue
     cargarProyectos();
+
+    // Agregar evento change al filtro de categorías
+    const categoryFilter = document.getElementById('category-filter');
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', async (e) => {
+            const categoriaSeleccionada = e.target.value;
+            await cargarProyectos(categoriaSeleccionada);
+        });
+    }
 });
 
 // Función para mostrar proyectos en formato tabla (si es necesario)
@@ -169,5 +180,3 @@ function mostrarProyectosTabla(proyectos) {
 // Actualizar proyectos cada cierto tiempo (opcional)
 const INTERVALO_ACTUALIZACION = 300000; // 5 minutos
 setInterval(cargarProyectos, INTERVALO_ACTUALIZACION);
-
-

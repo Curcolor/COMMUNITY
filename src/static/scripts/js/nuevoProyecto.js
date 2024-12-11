@@ -48,8 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const organizaciones = await obtenerOrganizaciones();
         mostrarOrganizacionesEnSelect(organizaciones);
 
-
-
     } catch (error) {
         console.error('Error al cargar organizaciones:', error);
         const selectOrg = document.getElementById('organizacion');
@@ -154,4 +152,10 @@ async function crearNuevoProyecto(event) {
             </div>
         `;
     }
-} 
+}
+
+// Agregar evento de envío al formulario
+document.getElementById('proyectoForm').addEventListener('submit', crearNuevoProyecto);
+
+// Agregar evento de cambio al input de imagen para previsualizar
+document.getElementById('imagen').addEventListener('change', previsualizarImagen);

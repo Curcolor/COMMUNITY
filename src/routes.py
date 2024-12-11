@@ -769,4 +769,3 @@ def routes(app):
                 "success": False,
                 "message": f"Error en el servidor: {str(e)}"
             }), 500
-

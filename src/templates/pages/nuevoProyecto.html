@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community - Nuevo Proyecto</title>
+    <link rel="shortcut icon" href="/src/static/images/comunity.ico" type="image/x-icon">
     <link rel="stylesheet" href="/src/static/styles/style.css">
     <link rel="stylesheet" href="/src/static/styles/css/nuevoProyecto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -40,7 +41,7 @@
                     <h2><i class="fas fa-project-diagram"></i> Crear Nuevo Proyecto</h2>
                 </div>
                 
-                <form id="proyectoForm" method="POST" action="/api/proyectos" enctype="multipart/form-data">
+                <form id="proyectoForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="titulo"><i class="fas fa-heading"></i> Título del Proyecto *</label>
                         <input type="text" id="titulo" class="form-control" name="titulo" required>
@@ -60,13 +61,11 @@
                         <label for="categoria"><i class="fas fa-tag"></i> Categoría *</label>
                         <select id="categoria" class="form-control" name="categoria" required>
                             <option value="">Seleccione una categoría</option>
-                            <option value="educacion">Educación</option>
-                            <option value="salud">Salud</option>
-                            <option value="ambiente">Medio Ambiente</option>
-                            <option value="tecnologia">Tecnología</option>
-                            <option value="cultura">Cultura</option>
-                            <option value="deporte">Deporte</option>
-                            <option value="social">Social</option>
+                            <option value="Deporte">Deporte</option>
+                            <option value="Salud">Salud</option>
+                            <option value="Medio Ambiente">Medio Ambiente</option>
+                            <option value="Cultura">Cultura</option>
+                            <option value="Alimentación">Alimentación</option>
                         </select>
                     </div>
 
