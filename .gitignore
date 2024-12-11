@@ -7,3 +7,4 @@ venv
 /src/Models/__pycache__
 /src/Routes/__pycache__
 /src/Views/__pycache__
+database

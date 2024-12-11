@@ -622,6 +622,7 @@ def routes(app):
     @app.route('/api/proyectos/<int:proyecto_id>')
     def obtener_proyecto(proyecto_id):
         try:
+            print(f"Obteniendo proyecto con ID: {proyecto_id}")  # Mensaje de inicio
             connection = app.get_db()
             cursor = connection.cursor()
             
@@ -639,6 +640,7 @@ def routes(app):
             """, (proyecto_id,))
             
             proyecto = cursor.fetchone()
+            print(f"Proyecto encontrado: {proyecto}")  # Mensaje de verificación
             
             if proyecto:
                 return jsonify({
@@ -653,12 +655,14 @@ def routes(app):
                     }
                 })
             else:
+                print("Proyecto no encontrado.")  # Mensaje de error
                 return jsonify({
                     "success": False,
                     "message": "Proyecto no encontrado"
                 }), 404
                 
         except Exception as e:
+            print(f"Error al obtener el proyecto: {str(e)}")  # Mensaje de error
             return jsonify({
                 "success": False,
                 "message": str(e)
@@ -676,7 +680,7 @@ def routes(app):
             print("Datos recibidos en /api/donaciones:", data)
             
             # Validar campos requeridos según la estructura de la tabla
-            campos_requeridos = ['monto', 'usuarios_id_usuario', 'proyectos_id_proyecto']
+            campos_requeridos = ['monto', 'proyecto_id']  # Eliminamos 'usuarios_id_usuario'
             for campo in campos_requeridos:
                 if campo not in data:
                     print(f"Error: Campo faltante: {campo}")
@@ -685,11 +689,18 @@ def routes(app):
                         "message": f"El campo {campo} es requerido"
                     }), 400
 
+            # Obtener el ID del usuario de la sesión
+            usuario_id = session.get('usuario_id')
+            if not usuario_id:
+                return jsonify({
+                    "success": False,
+                    "message": "Usuario no autenticado"
+                }), 401
+
             # Validar tipos de datos
             try:
                 monto = float(data['monto'])
-                usuario_id = int(data['usuarios_id_usuario'])
-                proyecto_id = int(data['proyectos_id_proyecto'])
+                proyecto_id = int(data['proyecto_id'])
                 
                 print("Valores convertidos:")
                 print(f"- Monto: {monto} (tipo: {type(monto)})")
