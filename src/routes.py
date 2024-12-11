@@ -3,6 +3,7 @@ from src.Models.modelo_db import BaseDatos
 
 def routes(app):
     
+    
     # PAGES ROUTES
     @app.route('/')
     @app.route('/inicio')
@@ -35,14 +36,11 @@ def routes(app):
         
         # Inicializar la base de datos
         db = BaseDatos()
-        
-        # Aquí puedes agregar código para obtener las organizaciones y donaciones del usuario
-        # Por ahora, inicializamos con valores vacíos
         organizaciones = []
         total_donado = 0
         
         return render_template('pages/perfil.html', 
-                             usuario=usuario['nombre'],  # Pasamos el nombre del usuario
+                             usuario=usuario['nombre'],  
                              total_donado=total_donado,
                              organizaciones=organizaciones)
 
@@ -70,6 +68,8 @@ def routes(app):
             return redirect(url_for('login', next=request.url))
         return render_template('pages/nuevaOR.html')
     
+
+
     
     # API ROUTES
     @app.route('/api/registro', methods=['POST'])
@@ -424,6 +424,7 @@ def routes(app):
     def logout():
         session.clear()
         return jsonify({'success': True})
+    
     @app.route('/api/proyectos', methods=['GET', 'POST'])
     def crear_proyecto():
         if request.method == 'POST':
