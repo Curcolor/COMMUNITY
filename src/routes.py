@@ -68,6 +68,9 @@ def routes(app):
             return redirect(url_for('login', next=request.url))
         return render_template('pages/nuevaOR.html')
     
+    @app.route('/enlaces')
+    def enlaces():
+        return render_template ('pages/enlaces.html')
 
 
     
