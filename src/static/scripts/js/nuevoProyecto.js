@@ -152,4 +152,10 @@ async function crearNuevoProyecto(event) {
             </div>
         `;
     }
-} 
+}
+
+// Agregar evento de envío al formulario
+document.getElementById('proyectoForm').addEventListener('submit', crearNuevoProyecto);
+
+// Agregar evento de cambio al input de imagen para previsualizar
+document.getElementById('imagen').addEventListener('change', previsualizarImagen);
