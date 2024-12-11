@@ -39,5 +39,15 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
-          nohup python run.py &
+          nohup python run.py > nohup.out 2>&1 &
         EOF
+
+    - name: Check server status
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+        EC2_KEY: ${{ secrets.EC2_KEY }}
+      run: |
+        echo "$EC2_KEY" > ec2_key.pem
+        chmod 400 ec2_key.pem
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST "tail -n 50 ~/app/nohup.out"
