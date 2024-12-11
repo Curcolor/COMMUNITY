@@ -12,7 +12,7 @@ async function verificarSesion() {
     }
 }
 
-const form = document.getElementById('organizacionForm');
+const form = document.getElementById('orgForm');
 if (form) {
     console.log('Formulario de organización encontrado');
     iniciarProcesoCreacionOrganizacion();
