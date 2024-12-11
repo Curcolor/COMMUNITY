@@ -369,18 +369,22 @@ def routes(app):
     @app.route('/api/login', methods=['POST'])
     def login_usuario():
         try:
+            print("Iniciando el proceso de inicio de sesión.")  # Mensaje de inicio
             datos = request.get_json()
             
             if not datos or 'email' not in datos or 'password' not in datos:
+                print("Faltan datos de inicio de sesión.")  # Mensaje de error
                 return jsonify({
                     'success': False,
                     'mensaje': 'Faltan datos de inicio de sesión'
                 }), 400
 
             db = BaseDatos()
+            print(f"Buscando usuario con email: {datos['email']}")  # Mensaje de búsqueda
             usuario = db.buscar_usuario_por_email(datos['email'])
             
             if usuario and usuario[6] == datos['password']:
+                print("Inicio de sesión exitoso.")  # Mensaje de éxito
                 # Guardar datos en la sesión
                 session['logged_in'] = True
                 session['usuario_id'] = usuario[0]
@@ -397,13 +401,14 @@ def routes(app):
                     }
                 })
             else:
+                print("Correo electrónico o contraseña incorrectos.")  # Mensaje de error
                 return jsonify({
                     'success': False,
                     'mensaje': 'Correo electrónico o contraseña incorrectos'
                 }), 401
 
         except Exception as e:
-            print(f"Error en el login: {str(e)}")
+            print(f"Error en el login: {str(e)}")  # Mensaje de error
             return jsonify({
                 'success': False,
                 'mensaje': 'Error al intentar iniciar sesión'

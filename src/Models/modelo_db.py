@@ -138,7 +138,7 @@ class BaseDatos:
             with self.get_conexion() as conexion:
                 cursor = conexion.cursor()
                 cursor.execute("""
-                    SELECT id_usuario, nombre_completo, email, contraseña 
+                    SELECT id_usuario, nombre_completo, dni, email, telefono, fecha_nacimiento, contraseña, fecha_registro 
                     FROM usuarios 
                     WHERE email = ?
                 """, (email,))
