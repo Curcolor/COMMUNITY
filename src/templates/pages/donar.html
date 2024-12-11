@@ -38,20 +38,33 @@
     <main class="container">
         <h2>Realizar una Donación</h2>
 
-        <!-- Sección para proyecto específico -->
-        <div id="proyecto-especifico" style="display: none;">
+        <div id="proyecto-especifico" style="display: block;">
             <div class="proyecto-info">
-                <h3>Donación para el proyecto: <span id="proyecto-titulo"></span></h3>
-                <p>Organización: <span id="proyecto-organizacion"></span></p>
+                <h3>Donación para el proyecto: <span id="proyecto-titulo">Salud para Comunidades</span></h3>
+                <p>Organización: <span id="proyecto-organizacion">Comunity</span></p>
                 <div class="meta-financiera">
-                    <p>Meta: $<span id="proyecto-meta"></span></p>
-                    <p>Recaudado: $<span id="proyecto-recaudado"></span></p>
+                    <p>Meta: $<span id="proyecto-meta">15.000</span></p>
+                    <p>Recaudado: $<span id="proyecto-recaudado">0</span></p>
                 </div>
             </div>
+            <form id="form_donacion_proyecto" class="donation-form">
+                <input type="hidden" id="proyecto_id" value="1">
+                <div class="form-group">
+                    <label for="monto_donacion">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Monto a donar
+                    </label>
+                    <input type="number" id="monto_donacion" required="" min="1" step="1" placeholder="Ingrese el monto a donar">
+                </div>
+                <button type="submit" class="donate-btn">
+                    <i class="fas fa-heart"></i>
+                    Donar ahora
+                </button>
+            </form>
         </div>
 
         <!-- Formulario único de donación -->
-        <div class="donation-container">
+        <div class="donation-container" id="donacion-general">
             <form id="form_donacion" class="donation-form">
                 <div class="form-group">
                     <label for="organizacion">
