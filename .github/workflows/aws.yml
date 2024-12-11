@@ -32,8 +32,8 @@ jobs:
       run: |
         echo "$EC2_KEY" > ec2_key.pem
         chmod 400 ec2_key.pem
-        ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST "mkdir -p ~/app"
-        scp -o StrictHostKeyChecking=no -i ec2_key.pem -r * $EC2_USER@$EC2_HOST:~/app
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST "mkdir -p ~/app && rm -rf ~/app/*"
+        scp -o StrictHostKeyChecking=no -i ec2_key.pem -r . $EC2_USER@$EC2_HOST:~/app
         ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST << 'EOF'
           cd ~/app
           python3 -m venv venv
