@@ -84,7 +84,7 @@ def routes(app):
                     return jsonify({'error': f'Falta el campo {campo}'}), 400
 
             # Crear instancia de la base de datos
-            db = app.get_db()
+            db = BaseDatos()
                 
             # Llamar al método crear_usuario con todos los parámetros requeridos
             usuario_id = db.crear_usuario(
