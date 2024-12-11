@@ -249,7 +249,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const proyectoId = urlParams.get('proyecto_id');
 
     if (proyectoId) {
-        console.log('Proyecto ID encontrado:', proyectoId);
         // Si hay un proyecto específico, mostrar ese formulario y ocultar el general
         document.getElementById('proyecto-especifico').style.display = 'block';
         document.getElementById('donacion-general').style.display = 'none';
@@ -263,14 +262,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (data.success) {
                 const proyecto = data.proyecto;
-                console.log('Proyecto:', proyecto);
                 document.getElementById('proyecto_id').value = proyecto.id;
                 document.getElementById('proyecto-titulo').textContent = proyecto.titulo;
                 document.getElementById('proyecto-organizacion').textContent = proyecto.organizacion_nombre;
                 document.getElementById('proyecto-meta').textContent = proyecto.meta_financiera.toLocaleString();
                 document.getElementById('proyecto-recaudado').textContent = proyecto.monto_recaudado.toLocaleString();
             } else {
-                console.error('Error al cargar la información del proyecto:', data.message);
                 throw new Error('No se pudo cargar la información del proyecto');
             }
         } catch (error) {
@@ -280,7 +277,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 '<p class="error">Error al cargar la información del proyecto</p>';
         }
     } else {
-        console.log('No se encontró un proyecto específico, mostrando formulario general.');
         // Si no hay proyecto específico, mostrar el formulario general
         document.getElementById('proyecto-especifico').style.display = 'none';
         document.getElementById('donacion-general').style.display = 'block';

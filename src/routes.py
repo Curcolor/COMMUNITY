@@ -769,4 +769,160 @@ def routes(app):
                 "success": False,
                 "message": f"Error en el servidor: {str(e)}"
             }), 500
+        
 
+    @app.route('/api/solicitudes_ayuda', methods=['POST'])
+    def crear_solicitud_ayuda():
+        try:
+            data = request.get_json()
+            print("Datos recibidos en /api/solicitudes_ayuda:", data)
+
+            # Validar campos requeridos según la estructura de la tabla
+            campos_requeridos = ['titulo', 'descripcion']
+            for campo in campos_requeridos:
+                if campo not in data:
+                    print(f"Error: Campo faltante: {campo}")
+                    return jsonify({
+                        "success": False,
+                        "message": f"El campo {campo} es requerido"
+                    }), 400
+
+            # Obtener el ID del usuario de la sesión
+            usuarios_id_usuario = session.get('usuario_id')
+            if not usuarios_id_usuario:
+                return jsonify({
+                    "success": False,
+                    "message": "Usuario no autenticado"
+                }), 401
+
+            # Obtener datos y validar tipos
+            try:
+                titulo = str(data['titulo'])
+                descripcion = str(data.get('descripcion', None))
+                meta_financiera = float(data['meta_financiera']) if 'meta_financiera' in data else None
+                imagen_url = str(data.get('imagen_url', None))
+                informacion_contacto = str(data.get('informacion_contacto', None))
+                estado = str(data.get('estado', "pendiente"))
+
+                print("Valores procesados:")
+                print(f"- Título: {titulo}")
+                print(f"- Descripción: {descripcion}")
+                print(f"- Meta financiera: {meta_financiera}")
+                print(f"- URL de imagen: {imagen_url}")
+                print(f"- Información de contacto: {informacion_contacto}")
+                print(f"- Estado: {estado}")
+                print(f"- Usuario ID: {usuarios_id_usuario}")
+
+            except ValueError as e:
+                print(f"Error de conversión de tipos: {str(e)}")
+                return jsonify({
+                    "success": False,
+                    "message": "Error en el formato de los datos"
+                }), 400
+
+            connection = app.get_db()
+            cursor = connection.cursor()
+
+            try:
+                # Crear la solicitud de ayuda
+                valores = (titulo, descripcion, meta_financiera, imagen_url, informacion_contacto, estado, usuarios_id_usuario)
+                print("Valores a insertar en la base de datos:", valores)
+
+                query = """
+                INSERT INTO solicitudes_ayuda (
+                    titulo,
+                    descripcion,
+                    meta_financiera,
+                    imagen_url,
+                    informacion_contacto,
+                    estado,
+                    usuarios_id_usuario
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """
+
+                cursor.execute(query, valores)
+                connection.commit()
+
+                return jsonify({
+                    "success": True,
+                    "message": "Solicitud de ayuda creada exitosamente"
+                })
+
+            except Exception as e:
+                connection.rollback()
+                print(f"Error al crear la solicitud de ayuda: {str(e)}")
+                return jsonify({
+                    "success": False,
+                    "message": f"Error al crear la solicitud de ayuda: {str(e)}"
+                }), 500
+
+            finally:
+                cursor.close()
+                connection.close()
+
+        except Exception as e:
+            print(f"Error en el servidor: {str(e)}")
+            return jsonify({
+                "success": False,
+                "message": f"Error en el servidor: {str(e)}"
+            }), 500
+
+
+    @app.route('/api/mis_solicitudes_ayuda', methods=['GET'])
+    def obtener_solicitudes_ayuda():
+        try:
+            usuario_id = request.args.get('usuario_id')  # Obtener solicitudes de un usuario específico
+            estado = request.args.get('estado')  # Filtrar por estado
+
+            # Conexión a la base de datos
+            connection = app.get_db()
+            cursor = connection.cursor()
+
+            # Consulta base
+            query = "SELECT id_solicitud, titulo, descripcion, meta_financiera, imagen_url, informacion_contacto, estado, fecha_solicitud, usuarios_id_usuario FROM solicitudes_ayuda"
+            condiciones = []
+            parametros = []
+
+            if usuario_id:
+                condiciones.append("usuarios_id_usuario = ?")
+                parametros.append(usuario_id)
+
+            if estado:
+                condiciones.append("estado = ?")
+                parametros.append(estado)
+
+            if condiciones:
+                query += " WHERE " + " AND ".join(condiciones)
+
+            cursor.execute(query, parametros)
+            filas = cursor.fetchall()
+
+            # Mapeo de resultados
+            solicitudes = [
+                {
+                    "id": fila[0],
+                    "titulo": fila[1],
+                    "descripcion": fila[2],
+                    "meta_financiera": fila[3],
+                    "imagen_url": fila[4],
+                    "informacion_contacto": fila[5],
+                    "estado": fila[6],
+                    "fecha_solicitud": fila[7],
+                    "usuario_id": fila[8]
+                } for fila in filas
+            ]
+
+            return jsonify({
+                "success": True,
+                "solicitudes": solicitudes
+            }), 200
+
+        except Exception as e:
+            return jsonify({
+                "success": False,
+                "message": str(e)
+            }), 500
+        
+        finally:
+                cursor.close()
+                connection.close()
