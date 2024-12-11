@@ -66,6 +66,11 @@ function crearTarjetaProyecto(proyecto) {
     // Calcular el porcentaje de progreso
     const progreso = (proyecto.monto_recaudado / proyecto.meta_financiera) * 100;
 
+    // Mensaje para el progreso
+    const mensajeProgreso = progreso >= 100 
+        ? `Se completó el 100% de la meta y una ${progreso - 100}% extra` 
+        : `${progreso.toFixed(1)}% completado`;
+
     card.innerHTML = `
         <img src="${proyecto.imagen_url || '/src/static/images/helpp.jpg'}" alt="Proyecto ${proyecto.titulo}">
         <div class="project-content">
@@ -82,7 +87,7 @@ function crearTarjetaProyecto(proyecto) {
                 <div class="progress-bar">
                     <div class="progress" style="width: ${progreso}%"></div>
                 </div>
-                <p class="progress-text">${progreso.toFixed(1)}% completado</p>
+                <p class="progress-text">${mensajeProgreso}</p>
             </div>
             <div class="project-actions">
                 <button class="btn-donar" onclick="donarProyecto('${proyecto.id}')">
