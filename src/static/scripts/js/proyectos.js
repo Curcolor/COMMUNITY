@@ -68,7 +68,7 @@ function crearTarjetaProyecto(proyecto) {
 
     // Mensaje para el progreso
     const mensajeProgreso = progreso >= 100 
-        ? `Se completó el 100% de la meta y una ${progreso - 100}% extra` 
+        ? `Se completó el 100% de la meta y un ${progreso - 100}% extra` 
         : `${progreso.toFixed(1)}% completado`;
 
     card.innerHTML = `

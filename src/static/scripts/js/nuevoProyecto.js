@@ -48,9 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const organizaciones = await obtenerOrganizaciones();
         mostrarOrganizacionesEnSelect(organizaciones);
 
-        // Agrupar organizaciones por categoría
-        const organizacionesAgrupadas = agruparOrganizacionesPorCategoria(organizaciones);
-        console.log('Organizaciones agrupadas:', organizacionesAgrupadas);
+
 
     } catch (error) {
         console.error('Error al cargar organizaciones:', error);
